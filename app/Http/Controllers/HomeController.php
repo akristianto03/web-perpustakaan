@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Auth;
 
 class HomeController extends Controller
 {
@@ -23,6 +24,12 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $role = Auth::user()->isAdmin;
+        if($role == 1) {
+            return redirect()->to(route('admin.book.index'));
+        } else {
+            return redirect()->to('/');
+        }
+        // return view('home');
     }
 }
