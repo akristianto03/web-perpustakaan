@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -12,9 +13,10 @@
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet">
 
     {{-- Jquery --}}
-    <script src="https://code.jquery.com/jquery-3.6.1.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
@@ -30,31 +32,38 @@
 
 
 </head>
+
 <body>
     <div class="min-vh-100">
-        @if(Auth::check())
-        @if(Auth::user()->isAdmin == 1)
-        @include('inc.navbarAdmin')
-        @yield('content')
+        @if (Auth::check())
+            @if (Auth::user()->isAdmin == 1)
+                @include('inc.navbarAdmin')
+                @yield('content')
+            @else
+                @include('inc.navbar')
+                @yield('content')
+            @endif
         @else
-        @include('inc.navbar')
-        @yield('content')
+            @include('inc.navbar')
+            @yield('content')
         @endif
-        @else
-        @include('inc.navbar')
-        @yield('content')
-        @endif
-        </div>
-        
-    
-        @include('inc.footer')
-    
-        <!-- Bootstrap core JavaScript-->
-        {{-- <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script> --}}
-    
-        <!-- Table plugins -->
-        {{-- <script src="{{ asset('vendor/datatables/jquery.dataTables.min.js') }}"></script>
-        <script src="{{ asset('vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
-        <script src="{{ asset('js/datatables-demo.js') }}"></script> --}}
+    </div>
+
+
+    @include('inc.footer')
+
+    <!-- Bootstrap core JavaScript-->
+    {{-- <script src="{{ asset('vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script> --}}
+
+    <!-- Table plugins -->
+    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#dataTable').DataTable();
+        });
+    </script>
+
 </body>
+
 </html>
