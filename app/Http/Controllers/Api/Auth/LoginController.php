@@ -11,6 +11,7 @@ use GuzzleHttp\Client as GuzzleHttpClient;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Http;
 
@@ -84,7 +85,7 @@ class LoginController extends Controller
             'api_message' => 'Berhasil logout.',
             'api_results' => Auth::user()
         ];
-        $accesstoken = Auth::user()->currentAccessToken();
+        $accesstoken = Auth::user()->token();
         DB::table('oauth_refresh_tokens')->where('access_token_id', $accesstoken->id)->update(['revoked' => true]);
         $accesstoken->revoke();
 

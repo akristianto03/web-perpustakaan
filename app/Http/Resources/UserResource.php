@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class PinjamResource extends JsonResource
+class UserResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,13 +15,11 @@ class PinjamResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
-            'book' => $this->book,
-            'idPeminjam' => $this->user->id,
-            'peminjam' => $this->user->name,
-            'status' => $this->status,
-            'tglPinjam' => $this->created_at->toDateString(),
-            'tglKembali' => $this->tglKembali,
+            "id" => $this->id,
+            "name" => $this->name,
+            "email" => $this->email,
+            "isAdmin" => $this->isAdmin,
+            "pinjams" => PinjamResource::collection($this->pinjams)
         ];
     }
 }
